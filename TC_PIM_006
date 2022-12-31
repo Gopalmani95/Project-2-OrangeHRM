@@ -1,0 +1,113 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys 
+import time
+import random
+
+s= Service("C:\Webdriver\chromedriver.exe")
+driver = webdriver.Chrome(service=s)
+driver.maximize_window()
+driver.implicitly_wait(10)
+driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
+time.sleep(3)
+driver.find_element(By.XPATH,"//input[@name='username']").send_keys("Admin")
+driver.find_element(By.XPATH,"//input[@type='password']").send_keys("admin123")
+driver.find_element(By.XPATH,"//button[@type='submit']").click()
+#click PIM Module
+pim=driver.find_element(By.XPATH,"//span[text()='PIM']")
+pim.click()
+#click Add
+driver.find_element(By.XPATH,"//button[text()=' Add ']").click()
+#Add png photo
+time.sleep(3)
+#photo=driver.find_element(By.XPATH,"//button[@class='oxd-icon-button employee-image-action']")
+#photo.send_keys("C:\\Users\\dell\\OneDrive\\Desktop\\image 01.jpg")
+# First name
+first=driver.find_element(By.XPATH,"//input[@placeholder='First Name']")
+first.send_keys("Gopal")
+#Middle name
+middle=driver.find_element(By.XPATH,"//input[@placeholder='Middle Name']")
+middle.send_keys("Krishnan")
+#Last name
+last=driver.find_element(By.XPATH,"//input[@placeholder='Last Name']")
+last.send_keys("Gopi")
+#click
+driver.find_element(By.XPATH,"//span[@class='oxd-switch-input oxd-switch-input--active --label-right']").click()
+n = random.randint(100,500)
+#username
+time.sleep(2)
+user=driver.find_element(By.XPATH,"(//input[@class='oxd-input oxd-input--active'])[3]")
+user.send_keys("Gopal"+str(n))
+#password
+n1 = random.randint(100,500)
+time.sleep(2)
+password=driver.find_element(By.XPATH,"(//input[@type='password'])[1]")
+password.send_keys("Gopal@"+str(n1))
+#confirm
+confirm=driver.find_element(By.XPATH,"(//input[@type='password'])[2]")
+confirm.send_keys("Gopal@"+str(n1))
+#status
+time.sleep(2)
+statusdisabled=driver.find_element(By.XPATH,"//label[text()='Disabled']//input")
+statusenabled=driver.find_element(By.XPATH,"//label[text()='Enabled']//input")
+actions = ActionChains(driver)
+time.sleep(2)
+ActionChains(driver).click(statusdisabled).perform()
+ActionChains(driver).click(statusenabled).perform()
+#save
+save=driver.find_element(By.XPATH,"//button[text()=' Save ']").click()
+time.sleep(2)
+#Sucessfull
+driver.find_element(By.XPATH,"//h6[text()='Personal Details']").is_displayed()
+#contactdetails
+time.sleep(2)
+contactdetails=driver.find_element(By.XPATH,"//a[text()='Contact Details']")
+contactdetails.click()
+#address
+time.sleep(2)
+street1=driver.find_element(By.XPATH,"//label[text()='Street 1']//following::input[1]")
+street1.send_keys("plot no:10, Sobha apartments")
+time.sleep(2)
+street2=driver.find_element(By.XPATH,"//label[text()='Street 2']//following::input[1]")
+street2.send_keys("Thoraipakkam main road")
+time.sleep(2)
+city=driver.find_element(By.XPATH,"//label[text()='City']//following::input[1]")
+city.send_keys("Chennai")
+time.sleep(2)
+state_province=driver.find_element(By.XPATH,"//label[text()='State/Province']//following::input[1]")
+state_province.send_keys("Tamil Nadu")
+time.sleep(2)
+zip_postalcode=driver.find_element(By.XPATH,"//label[text()='Zip/Postal Code']//following::input[1]")
+zip_postalcode.send_keys("600126")
+time.sleep(2)
+country=driver.find_element(By.XPATH,"//label[text()='Country']//following::div[1]")
+actions = ActionChains(driver)
+ActionChains(driver).click(country).send_keys(Keys.SHIFT + 'i').send_keys(Keys.SHIFT + 'i').send_keys(Keys.ENTER).perform()
+time.sleep(2)
+home=driver.find_element(By.XPATH,"//label[text()='Home']//following::input[1]")
+home.send_keys("9876543210")
+time.sleep(2)
+mobile=driver.find_element(By.XPATH,"//label[text()='Mobile']//following::input[1]")
+mobile.send_keys("9876543210")
+time.sleep(2)
+work=driver.find_element(By.XPATH,"//label[text()='Work']//following::input[1]")
+work.send_keys("9876543210")
+time.sleep(2)
+workemail=driver.find_element(By.XPATH,"//label[text()='Work Email']//following::input[1]")
+workemail.send_keys("Test@test.com")
+time.sleep(2)
+otheremail=driver.find_element(By.XPATH,"//label[text()='Other Email']//following::input[1]")
+otheremail.send_keys("Test@testcom")
+time.sleep(2)
+save=driver.find_element(By.XPATH,"//h6[text()='Email']//following::button[@type='submit']")
+save.click()
+time.sleep(2)
+
+
+
+
+
+
+

@@ -1,0 +1,100 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys 
+import time
+from datetime import datetime, timedelta
+import random
+
+s= Service("C:\Webdriver\chromedriver.exe")
+driver = webdriver.Chrome(service=s)
+driver.maximize_window()
+driver.implicitly_wait(10)
+driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
+time.sleep(3)
+driver.find_element(By.XPATH,"//input[@name='username']").send_keys("Admin")
+driver.find_element(By.XPATH,"//input[@type='password']").send_keys("admin123")
+driver.find_element(By.XPATH,"//button[@type='submit']").click()
+#click PIM Module
+pim=driver.find_element(By.XPATH,"//span[text()='PIM']")
+pim.click()
+#click Add
+driver.find_element(By.XPATH,"//button[text()=' Add ']").click()
+#Add png photo
+time.sleep(3)
+actions = ActionChains(driver)
+photo=driver.find_element(By.XPATH,"//input[@type='file']")
+ActionChains(driver).send_keys("C:\\Users\\dell\\Downloads\\AutomationTest.jpg").send_keys(Keys.ENTER).perform()
+#photo.send_keys("Users\dell\OneDrive\Desktop\images.jpg")
+# First name
+first=driver.find_element(By.XPATH,"//input[@placeholder='First Name']")
+first.send_keys("Gopal")
+#Middle name
+middle=driver.find_element(By.XPATH,"//input[@placeholder='Middle Name']")
+middle.send_keys("Krishnan")
+#Last name
+last=driver.find_element(By.XPATH,"//input[@placeholder='Last Name']")
+last.send_keys("Gopi")
+#click
+driver.find_element(By.XPATH,"//span[@class='oxd-switch-input oxd-switch-input--active --label-right']").click()
+n = random.randint(1,5000)
+#username
+time.sleep(2)
+user=driver.find_element(By.XPATH,"(//input[@class='oxd-input oxd-input--active'])[3]")
+user.send_keys("Gopal"+str(n))
+#password
+n1 = random.randint(10000,500000)
+time.sleep(2)
+password=driver.find_element(By.XPATH,"(//input[@type='password'])[1]")
+password.send_keys("Gopal@"+str(n1))
+#confirm
+confirm=driver.find_element(By.XPATH,"(//input[@type='password'])[2]")
+confirm.send_keys("Gopal@"+str(n1))
+#status
+time.sleep(2)
+statusdisabled=driver.find_element(By.XPATH,"//label[text()='Disabled']//input")
+statusenabled=driver.find_element(By.XPATH,"//label[text()='Enabled']//input")
+time.sleep(2)
+ActionChains(driver).click(statusdisabled).perform()
+ActionChains(driver).click(statusenabled).perform()
+#save
+save=driver.find_element(By.XPATH,"//button[text()=' Save ']").click()
+time.sleep(2)
+#Sucessfull
+driver.find_element(By.XPATH,"//h6[text()='Personal Details']").is_displayed()
+#Job
+time.sleep(2)
+job=driver.find_element(By.XPATH,"//a[text()='Job']")
+job.click()
+time.sleep(2)
+terminateemployment=driver.find_element(By.XPATH,"//button[text()=' Terminate Employment ']")
+terminateemployment.click()
+time.sleep(2)
+terminationdate=driver.find_element(By.XPATH,"//label[text()='Termination Date']//following::input[1]")
+presentday = datetime.now()
+desireddate = presentday + timedelta(2)
+date=desireddate.strftime('%Y-%m-%d')
+print(date)
+terminationdate.send_keys(date)
+time.sleep(2)
+terminationreason=driver.find_element(By.XPATH,"//label[text()='Termination Reason']//following::div[1]")
+ActionChains(driver).click(terminationreason).send_keys(Keys.SHIFT + 'l').send_keys(Keys.ENTER).click(terminationreason).perform()
+time.sleep(2)
+note=driver.find_element(By.XPATH,"//label[text()='Note']//following::textarea[1]")
+note.send_keys("Automation Test")
+time.sleep(2)
+save=driver.find_element(By.XPATH,"//p[text()='Terminate Employment']//following::button[@type='submit']")
+save.click()
+time.sleep(5)
+driver.execute_script("window.scrollBy(0,100)","")
+driver.find_element(By.XPATH,"//p[@class='oxd-text oxd-text--p orangehrm-terminate-date']").is_displayed() 
+time.sleep(2)
+activateEmploymentbutton=driver.find_element(By.XPATH,"//button[text()=' Activate Employment ']")
+activateEmploymentbutton.is_displayed()
+time.sleep(2)
+activateEmploymentbutton.click()
+time.sleep(2)
+driver.execute_script("window.scrollBy(0,100)","")
+driver.find_element(By.XPATH,"//button[text()=' Terminate Employment ']").is_displayed()
+

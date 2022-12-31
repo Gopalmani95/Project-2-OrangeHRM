@@ -1,0 +1,63 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+import time
+from selenium.webdriver.common.keys import Keys 
+from selenium.webdriver.common.action_chains import ActionChains
+s= Service("C:\Webdriver\chromedriver.exe")
+driver = webdriver.Chrome(service=s)
+driver.maximize_window()
+driver.implicitly_wait(10)
+driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
+time.sleep(3)
+driver.find_element(By.XPATH,"//input[@name='username']").send_keys("Admin")
+time.sleep(3)
+driver.find_element(By.XPATH,"//input[@type='password']").send_keys("admin123")
+time.sleep(1)
+driver.find_element(By.XPATH,"//button[@type='submit']").click()
+time.sleep(1)
+admin=driver.find_element(By.XPATH,"//span[text()='Admin']")
+time.sleep(1)
+admin.click()
+usermanagement=driver.find_element(By.XPATH,"//span[text()='User Management ']")
+usermanagement.click()
+user=driver.find_element(By.XPATH,"//a[text()='Users']")
+user.click()
+UserRole=[]
+UserRoleExpected=['Admin', 'ESS']
+selectvalue=driver.find_element(By.XPATH,"//label[text()='User Role']//following::div[@class='oxd-select-text-input'][1]")
+actions = ActionChains(driver)
+time.sleep(3)
+ActionChains(driver).click(selectvalue).send_keys(Keys.DOWN).send_keys(Keys.ENTER).perform()
+time.sleep(3)
+test1=driver.find_element(By.XPATH,"//label[text()='User Role']//following::div[@class='oxd-select-text-input'][1]").text
+UserRole.append(test1)
+ActionChains(driver).send_keys(Keys.DOWN).send_keys(Keys.ENTER).click(selectvalue).perform()
+time.sleep(3)
+test2=driver.find_element(By.XPATH,"//label[text()='User Role']//following::div[@class='oxd-select-text-input'][1]").text
+UserRole.append(test2)
+print(UserRole)
+if UserRoleExpected == UserRole:
+    print("User Role dropdown contains Admin and ESS")
+else :
+    print("false")
+
+Status=[]
+StatusExpected=['Enabled', 'Disabled']
+selectvalue1=driver.find_element(By.XPATH,"//label[text()='Status']//following::div[@class='oxd-select-text-input'][1]")
+actions = ActionChains(driver)
+time.sleep(3)
+ActionChains(driver).click(selectvalue1).send_keys(Keys.DOWN).send_keys(Keys.ENTER).perform()
+time.sleep(3)
+test3=driver.find_element(By.XPATH,"//label[text()='Status']//following::div[@class='oxd-select-text-input'][1]").text
+Status.append(test3)
+ActionChains(driver).send_keys(Keys.DOWN).send_keys(Keys.ENTER).click(selectvalue1).perform()
+time.sleep(3)
+test4=driver.find_element(By.XPATH,"//label[text()='Status']//following::div[@class='oxd-select-text-input'][1]").text
+Status.append(test4)
+print(Status)
+
+if StatusExpected == Status:
+    print("Status dropdown contains Enabled and Disabled")
+else :
+    print("false")

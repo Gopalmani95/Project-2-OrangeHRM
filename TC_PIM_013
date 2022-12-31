@@ -1,0 +1,105 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys 
+import time
+from datetime import datetime, timedelta
+import random
+
+s= Service("C:\Webdriver\chromedriver.exe")
+driver = webdriver.Chrome(service=s)
+driver.maximize_window()
+driver.implicitly_wait(10)
+driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
+time.sleep(3)
+driver.find_element(By.XPATH,"//input[@name='username']").send_keys("Admin")
+driver.find_element(By.XPATH,"//input[@type='password']").send_keys("admin123")
+driver.find_element(By.XPATH,"//button[@type='submit']").click()
+#click PIM Module
+pim=driver.find_element(By.XPATH,"//span[text()='PIM']")
+pim.click()
+#click Add
+driver.find_element(By.XPATH,"//button[text()=' Add ']").click()
+#Add png photo
+time.sleep(3)
+actions = ActionChains(driver)
+photo=driver.find_element(By.XPATH,"//input[@type='file']")
+ActionChains(driver).send_keys("C:\\Users\\dell\\Downloads\\AutomationTest.jpg").send_keys(Keys.ENTER).perform()
+#photo.send_keys("Users\dell\OneDrive\Desktop\images.jpg")
+# First name
+first=driver.find_element(By.XPATH,"//input[@placeholder='First Name']")
+first.send_keys("Gopal")
+#Middle name
+middle=driver.find_element(By.XPATH,"//input[@placeholder='Middle Name']")
+middle.send_keys("Krishnan")
+#Last name
+last=driver.find_element(By.XPATH,"//input[@placeholder='Last Name']")
+last.send_keys("Gopi")
+#click
+driver.find_element(By.XPATH,"//span[@class='oxd-switch-input oxd-switch-input--active --label-right']").click()
+n = random.randint(1,5000)
+#username
+time.sleep(2)
+user=driver.find_element(By.XPATH,"(//input[@class='oxd-input oxd-input--active'])[3]")
+user.send_keys("Gopal"+str(n))
+#password
+n1 = random.randint(10000,500000)
+time.sleep(2)
+password=driver.find_element(By.XPATH,"(//input[@type='password'])[1]")
+password.send_keys("Gopal@"+str(n1))
+#confirm
+confirm=driver.find_element(By.XPATH,"(//input[@type='password'])[2]")
+confirm.send_keys("Gopal@"+str(n1))
+#status
+time.sleep(2)
+statusdisabled=driver.find_element(By.XPATH,"//label[text()='Disabled']//input")
+statusenabled=driver.find_element(By.XPATH,"//label[text()='Enabled']//input")
+time.sleep(2)
+ActionChains(driver).click(statusdisabled).perform()
+ActionChains(driver).click(statusenabled).perform()
+#save
+save=driver.find_element(By.XPATH,"//button[text()=' Save ']").click()
+time.sleep(2)
+#Sucessfull
+driver.find_element(By.XPATH,"//h6[text()='Personal Details']").is_displayed()
+#Job
+time.sleep(2)
+salary=driver.find_element(By.XPATH,"//a[text()='Salary']")
+salary.click()
+time.sleep(2)
+Assignedsalarycomponents=driver.find_element(By.XPATH,"//h6[text()='Assigned Salary Components']//following::button[1]")
+Assignedsalarycomponents.click()
+time.sleep(2)
+salarycomponent=driver.find_element(By.XPATH,"//label[text()='Salary Component']//following::input[1]")
+salarycomponent.send_keys("Automatin Test")
+time.sleep(2)
+paygrade=driver.find_element(By.XPATH,"//label[text()='Pay Grade']//following::div[1]")
+ActionChains(driver).click(paygrade).send_keys(Keys.SHIFT + 'g').send_keys(Keys.SHIFT + 'g').send_keys(Keys.ENTER).click(paygrade).perform()
+time.sleep(2)
+payfrequency=driver.find_element(By.XPATH,"//label[text()='Pay Frequency']//following::div[1]")
+ActionChains(driver).click(paygrade).send_keys(Keys.SHIFT + 'm').send_keys(Keys.ENTER).click(paygrade).perform()
+time.sleep(2)
+currency=driver.find_element(By.XPATH,"//label[text()='Currency']//following::div[1]")
+ActionChains(driver).click(currency).send_keys(Keys.SHIFT + 'i').send_keys(Keys.SHIFT + 'i').send_keys(Keys.SHIFT + 'i').send_keys(Keys.ENTER).click(currency).perform()
+time.sleep(2)
+amount=driver.find_element(By.XPATH,"//label[text()='Amount']//following::input[1]")
+amount.send_keys("50,000")
+time.sleep(2)
+directdepositdetails=driver.find_element(By.XPATH,"//p[text()='Include Direct Deposit Details']//following::input[1]")
+ActionChains(driver).click(directdepositdetails).perform()
+accountnumber=driver.find_element(By.XPATH,"//label[text()='Account Number']//following::input[1]")
+accountnumber.send_keys("0346777")
+time.sleep(2)
+accounttype=driver.find_element(By.XPATH,"//label[text()='Account Type']//following::div[1]")
+ActionChains(driver).click(accounttype).send_keys(Keys.SHIFT + 's').send_keys(Keys.ENTER).click(accounttype).perform()
+time.sleep(2)
+routingnumber=driver.find_element(By.XPATH,"//label[text()='Routing Number']//following::input[1]")
+routingnumber.send_keys("456708765")
+time.sleep(2)
+amount=driver.find_element(By.XPATH,"//label[text()='Amount']//following::input[1]")
+amount.send_keys("7,000")
+time.sleep(2)
+save=driver.find_element(By.XPATH,"//h6[text()=' Add Salary Component ']//following::button[@type='submit']")
+save.click()
+

@@ -1,0 +1,62 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.action_chains import ActionChains
+
+import time
+import random
+
+s= Service("C:\Webdriver\chromedriver.exe")
+driver = webdriver.Chrome(service=s)
+driver.maximize_window()
+driver.implicitly_wait(10)
+driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
+time.sleep(3)
+driver.find_element(By.XPATH,"//input[@name='username']").send_keys("Admin")
+driver.find_element(By.XPATH,"//input[@type='password']").send_keys("admin123")
+driver.find_element(By.XPATH,"//button[@type='submit']").click()
+#click PIM Module
+pim=driver.find_element(By.XPATH,"//span[text()='PIM']")
+pim.click()
+#click Add
+driver.find_element(By.XPATH,"//button[text()=' Add ']").click()
+#Add png photo
+time.sleep(3)
+#photo=driver.find_element(By.XPATH,"//button[@class='oxd-icon-button employee-image-action']")
+#photo.send_keys("C:\\Users\\dell\\OneDrive\\Desktop\\image 01.jpg")
+# First name
+first=driver.find_element(By.XPATH,"//input[@placeholder='First Name']")
+first.send_keys("Gopal")
+#Middle name
+middle=driver.find_element(By.XPATH,"//input[@placeholder='Middle Name']")
+middle.send_keys("Krishnan")
+#Last name
+last=driver.find_element(By.XPATH,"//input[@placeholder='Last Name']")
+last.send_keys("Gopi")
+#click
+driver.find_element(By.XPATH,"//span[@class='oxd-switch-input oxd-switch-input--active --label-right']").click()
+n = random.randint(100,500)
+#username
+user=driver.find_element(By.XPATH,"(//input[@class='oxd-input oxd-input--active'])[3]")
+user.send_keys("Gopal"+str(n))
+#password
+n1 = random.randint(100,500)
+password=driver.find_element(By.XPATH,"(//input[@type='password'])[1]")
+password.send_keys("Gopal@"+str(n1))
+#confirm
+confirm=driver.find_element(By.XPATH,"(//input[@type='password'])[2]")
+confirm.send_keys("Gopal@"+str(n1))
+#status
+statusdisabled=driver.find_element(By.XPATH,"//label[text()='Disabled']//input")
+statusenabled=driver.find_element(By.XPATH,"//label[text()='Enabled']//input")
+actions = ActionChains(driver)
+time.sleep(3)
+ActionChains(driver).click(statusdisabled).perform()
+ActionChains(driver).click(statusenabled).perform()
+#save
+save=driver.find_element(By.XPATH,"//button[text()=' Save ']").click()
+time.sleep(10)
+#Sucessfull
+driver.find_element(By.XPATH,"//h6[text()='Personal Details']").is_displayed()
+#print(driver.find_element(By.XPATH,"//h6[text()='Personal Details']").is_displayed())
+

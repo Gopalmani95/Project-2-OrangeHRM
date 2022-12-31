@@ -1,0 +1,98 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys 
+import time
+import random
+
+s= Service("C:\Webdriver\chromedriver.exe")
+driver = webdriver.Chrome(service=s)
+driver.maximize_window()
+driver.implicitly_wait(10)
+driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
+time.sleep(3)
+driver.find_element(By.XPATH,"//input[@name='username']").send_keys("Admin")
+driver.find_element(By.XPATH,"//input[@type='password']").send_keys("admin123")
+driver.find_element(By.XPATH,"//button[@type='submit']").click()
+#click PIM Module
+pim=driver.find_element(By.XPATH,"//span[text()='PIM']")
+pim.click()
+#click Add
+driver.find_element(By.XPATH,"//button[text()=' Add ']").click()
+#Add png photo
+time.sleep(3)
+#photo=driver.find_element(By.XPATH,"//button[@class='oxd-icon-button employee-image-action']")
+#photo.send_keys("C:\\Users\\dell\\OneDrive\\Desktop\\image 01.jpg")
+# First name
+first=driver.find_element(By.XPATH,"//input[@placeholder='First Name']")
+first.send_keys("Gopal")
+#Middle name
+middle=driver.find_element(By.XPATH,"//input[@placeholder='Middle Name']")
+middle.send_keys("Krishnan")
+#Last name
+last=driver.find_element(By.XPATH,"//input[@placeholder='Last Name']")
+last.send_keys("Gopi")
+#click
+driver.find_element(By.XPATH,"//span[@class='oxd-switch-input oxd-switch-input--active --label-right']").click()
+n = random.randint(1,5000)
+#username
+time.sleep(2)
+user=driver.find_element(By.XPATH,"(//input[@class='oxd-input oxd-input--active'])[3]")
+user.send_keys("Gopal"+str(n))
+#password
+n1 = random.randint(10000,500000)
+time.sleep(2)
+password=driver.find_element(By.XPATH,"(//input[@type='password'])[1]")
+password.send_keys("Gopal@"+str(n1))
+#confirm
+confirm=driver.find_element(By.XPATH,"(//input[@type='password'])[2]")
+confirm.send_keys("Gopal@"+str(n1))
+#status
+time.sleep(2)
+statusdisabled=driver.find_element(By.XPATH,"//label[text()='Disabled']//input")
+statusenabled=driver.find_element(By.XPATH,"//label[text()='Enabled']//input")
+actions = ActionChains(driver)
+time.sleep(2)
+ActionChains(driver).click(statusdisabled).perform()
+ActionChains(driver).click(statusenabled).perform()
+#save
+save=driver.find_element(By.XPATH,"//button[text()=' Save ']").click()
+time.sleep(2)
+#Sucessfull
+driver.find_element(By.XPATH,"//h6[text()='Personal Details']").is_displayed()
+#emergencycontacts
+time.sleep(2)
+emergencycontacts=driver.find_element(By.XPATH,"//a[text()='Emergency Contacts']")
+emergencycontacts.click()
+#assignedemergencycontact
+time.sleep(2)
+assignedemergencycontact=driver.find_element(By.XPATH,"//h6[text()='Assigned Emergency Contacts']//following::button[text()=' Add '][1]")
+assignedemergencycontact.click()
+time.sleep(2)
+name=driver.find_element(By.XPATH,"//label[text()='Name']//following::input[1]")
+name.send_keys("Gopalll")
+time.sleep(2)
+relationship=driver.find_element(By.XPATH,"//label[text()='Relationship']//following::input[1]")
+relationship.send_keys("brother")
+time.sleep(2)
+hometelephone=driver.find_element(By.XPATH,"//label[text()='Home Telephone']//following::input[1]")
+hometelephone.send_keys("987654322")
+time.sleep(2)
+mobile=driver.find_element(By.XPATH,"//label[text()='Mobile']//following::input[1]")
+mobile.send_keys("987600126")
+time.sleep(2)
+worktelephone=driver.find_element(By.XPATH,"//label[text()='Work Telephone']//following::input[1]")
+worktelephone.send_keys("987600126")
+time.sleep(2)
+save=driver.find_element(By.XPATH,"//h6[text()='Save Emergency Contact']//following::button[@type='submit']")
+save.click()
+time.sleep(5)
+driver.find_element(By.XPATH,"//span[text()='(1) Record Found']").is_displayed
+
+
+
+
+
+
+

@@ -1,0 +1,98 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys 
+import time
+import random
+
+s= Service("C:\Webdriver\chromedriver.exe")
+driver = webdriver.Chrome(service=s)
+driver.maximize_window()
+driver.implicitly_wait(10)
+driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
+time.sleep(3)
+driver.find_element(By.XPATH,"//input[@name='username']").send_keys("Admin")
+driver.find_element(By.XPATH,"//input[@type='password']").send_keys("admin123")
+driver.find_element(By.XPATH,"//button[@type='submit']").click()
+#click PIM Module
+pim=driver.find_element(By.XPATH,"//span[text()='PIM']")
+pim.click()
+#click Add
+driver.find_element(By.XPATH,"//button[text()=' Add ']").click()
+#Add png photo
+time.sleep(3)
+actions = ActionChains(driver)
+photo=driver.find_element(By.XPATH,"//input[@type='file']")
+ActionChains(driver).send_keys("C:\\Users\\dell\\Downloads\\AutomationTest.jpg").send_keys(Keys.ENTER).perform()
+#photo.send_keys("Users\dell\OneDrive\Desktop\images.jpg")
+# First name
+first=driver.find_element(By.XPATH,"//input[@placeholder='First Name']")
+first.send_keys("Gopal")
+#Middle name
+middle=driver.find_element(By.XPATH,"//input[@placeholder='Middle Name']")
+middle.send_keys("Krishnan")
+#Last name
+last=driver.find_element(By.XPATH,"//input[@placeholder='Last Name']")
+last.send_keys("Gopi")
+#click
+driver.find_element(By.XPATH,"//span[@class='oxd-switch-input oxd-switch-input--active --label-right']").click()
+n = random.randint(1,5000)
+#username
+time.sleep(2)
+user=driver.find_element(By.XPATH,"(//input[@class='oxd-input oxd-input--active'])[3]")
+user.send_keys("Gopal"+str(n))
+#password
+n1 = random.randint(10000,500000)
+time.sleep(2)
+password=driver.find_element(By.XPATH,"(//input[@type='password'])[1]")
+password.send_keys("Gopal@"+str(n1))
+#confirm
+confirm=driver.find_element(By.XPATH,"(//input[@type='password'])[2]")
+confirm.send_keys("Gopal@"+str(n1))
+#status
+time.sleep(2)
+statusdisabled=driver.find_element(By.XPATH,"//label[text()='Disabled']//input")
+statusenabled=driver.find_element(By.XPATH,"//label[text()='Enabled']//input")
+time.sleep(2)
+ActionChains(driver).click(statusdisabled).perform()
+ActionChains(driver).click(statusenabled).perform()
+#save
+save=driver.find_element(By.XPATH,"//button[text()=' Save ']").click()
+time.sleep(2)
+#Sucessfull
+driver.find_element(By.XPATH,"//h6[text()='Personal Details']").is_displayed()
+#Job
+time.sleep(2)
+job=driver.find_element(By.XPATH,"//a[text()='Job']")
+job.click()
+time.sleep(2)
+joineddate=driver.find_element(By.XPATH,"//label[text()='Joined Date']//following::input[1]")
+joineddate.send_keys("2022-01-10")
+time.sleep(2)
+jobtitle=driver.find_element(By.XPATH,"//label[text()='Job Title']//following::div[1]")
+ActionChains(driver).click(jobtitle).send_keys(Keys.SHIFT + 'a').send_keys(Keys.ENTER).perform()
+time.sleep(2)
+#jobspecification=driver.find_element(By.XPATH,"//label[text()='Job Specification']//following::p[1]")
+#jobspecification.send_keys("")
+time.sleep(2)
+jobcategory=driver.find_element(By.XPATH,"//label[text()='Job Category']//following::div[1]")
+ActionChains(driver).click(jobcategory).send_keys(Keys.SHIFT + 'c').send_keys(Keys.ENTER).click(jobcategory).perform()
+time.sleep(2)
+subunit=driver.find_element(By.XPATH,"//label[text()='Sub Unit']//following::div[1]")
+ActionChains(driver).click(subunit).send_keys(Keys.SHIFT + 'a').send_keys(Keys.ENTER).click(subunit).perform()
+location=driver.find_element(By.XPATH,"//label[text()='Location']//following::div[1]")
+ActionChains(driver).click(location).send_keys(Keys.SHIFT + 'n').send_keys(Keys.ENTER).click(location).perform()
+employmentstatus=driver.find_element(By.XPATH,"//label[text()='Employment Status']//following::div[1]")
+ActionChains(driver).click(employmentstatus).send_keys(Keys.SHIFT + 'n').send_keys(Keys.ENTER).click(employmentstatus).perform()
+employmentcontractdetails=driver.find_element(By.XPATH,"//p[text()='Include Employment Contract Details']//following::input[1]")
+ActionChains(driver).click(employmentcontractdetails).perform()
+contractstartdate=driver.find_element(By.XPATH,"//label[text()='Contract Start Date']//following::input[1]")
+contractstartdate.send_keys("2022-01-01")
+contractenddate=driver.find_element(By.XPATH,"//label[text()='Contract End Date']//following::input[1]")
+contractenddate.send_keys("2022-11-11")
+browse=driver.find_element(By.XPATH,"//input[@class='oxd-file-input']")
+browse.send_keys("C:\\Users\\dell\\Downloads\\AutomationTest.jpg")
+save=driver.find_element(By.XPATH,"//h6[text()='Job Details']//following::button[@type='submit']")
+save.click()
+time.sleep(2)
